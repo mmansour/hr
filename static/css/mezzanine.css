@@ -18,7 +18,7 @@ img {box-shadow:0 0 10px #bbb;}
 .navbar {z-index:500;}
 .navbar-search {margin-left:10px;}
 .tagline {float:left; font-size:12px; font-style:italic; margin:9px 5px 0 -4px; color:#fff; opacity:.5;}
-.breadcrumb {margin:20px 0 25px 0;}
+.breadcrumb {margin:13px 0 17px 0;}
 .breadcrumb .divider {margin:0 5px;}
 .breadcrumb strong {color:#333;}
 ul.nav li.dropdown:hover ul.dropdown-menu {display:block;}
