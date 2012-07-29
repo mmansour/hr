@@ -16,6 +16,11 @@
 {% editable blog_post.title %}{{ blog_post.title }}{% endeditable %}
 {% endblock %}
 
+{% block title_header %}
+    <h1>{{ blog_post.title }}</h1>
+    <p></p>
+{% endblock %}
+
 {% block breadcrumb_menu %}
 {{ block.super }}
 <li class="active">{{ blog_post.title }}</li>
