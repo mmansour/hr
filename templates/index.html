@@ -13,5 +13,12 @@
 {% endblock %}
 
 {% block main %}
-{% trans "This is the homepage." %}
+{% trans "Welcome to Hotel Retreats: Your guide to wellness hotels, hotel retreats, fitness hotels, and healthy lifetyle organic getaways." %}
+
+<div class="blog-list-detail">
+<h3>Recent Blog Posts</h3>
+{% for blog_post in blog_post_list %}
+    <h4><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h4>
+{% endfor %}
+</div>
 {% endblock %}
