@@ -2,7 +2,6 @@ from mezzanine.core.models import Displayable, RichTextField
 from django.db import models
 from django.utils import simplejson
 from django.utils.translation import ugettext, ugettext_lazy as _
-from mezzanine.generic.fields import KeywordsField
 
 class HotelPage(Displayable):
     hotelid = models.IntegerField(max_length=400, verbose_name="Hotel ID", blank=True, null=True)
@@ -23,7 +22,6 @@ class HotelPage(Displayable):
     number_of_floors = models.IntegerField(max_length=10, verbose_name="Number of floors", blank=True, null=True)
     check_in_time = models.DateTimeField(blank=True, null=True, verbose_name="Check in time",)
     check_out_time = models.DateTimeField(blank=True, null=True, verbose_name="Check out time",)
-#    keywords = KeywordsField(verbose_name=_("Keywords"))
     property_information = RichTextField(blank=True, verbose_name="Property Information")
     area_information = RichTextField(blank=True, verbose_name="Area Information")
     property_description = RichTextField(blank=True, verbose_name="Property Description")
