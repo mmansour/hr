@@ -67,7 +67,7 @@ for h in responsedict['HotelListResponse']['HotelList']['HotelSummary']:
 
 ########################################## HOTEL IMAGES ################################################
 
-#hoteldetail = requests.get('http://api.ean.com/ean-services/rs/hotel/v3/info?\
+#hotelimages = requests.get('http://api.ean.com/ean-services/rs/hotel/v3/info?\
 #cid=55505\
 #&apiKey=5vmbsthq9569w8f25xzzggmf\
 #&customerUserAgent=xxx\
@@ -78,7 +78,7 @@ for h in responsedict['HotelListResponse']['HotelList']['HotelSummary']:
 #&hotelId=106347\
 #&options=HOTEL_IMAGES')
 #
-#responsedict = json.loads(hoteldetail.content)
+#responsedict = json.loads(hotelimages.content)
 #
 #print responsedict['HotelInformationResponse']['HotelImages']['HotelImage']
 #
