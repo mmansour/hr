@@ -1,8 +1,12 @@
-from gohotels.models import HotelPage, HotelImage
+from gohotels.models import HotelPage, HotelRoomImage, HotelImage
 from django.contrib import admin
 from mezzanine.core.admin import DisplayableAdmin
 
-class ChoiceInline(admin.TabularInline):
+class ChoiceInlineRoomImage(admin.TabularInline):
+    model = HotelRoomImage
+    extra = 2
+
+class ChoiceInlineHotelImage(admin.TabularInline):
     model = HotelImage
     extra = 2
 
@@ -24,7 +28,7 @@ class HotelAdmin(DisplayableAdmin):
         ("Rates",              {'fields': ['low_rate', 'high_rate']}),
     ]
 
-    inlines = [ChoiceInline]
+    inlines = [ChoiceInlineHotelImage, ChoiceInlineRoomImage,]
     list_display = ('title', 'status', 'publish_date',)
     list_editable = ('status',)
     list_filter = ['status','publish_date']

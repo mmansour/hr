@@ -46,6 +46,13 @@ class HotelPage(Displayable):
 
 
 class HotelImage(models.Model):
-    image = models.CharField(max_length=200, verbose_name="Hotel Image", blank=True, null=True)
+    image_url = models.CharField(max_length=200, verbose_name="Hotel Image URL", blank=True, null=True)
+    thumbnail_url = models.CharField(max_length=200, verbose_name="Hotel Thumbmail URL", blank=True, null=True)
+    alt = models.CharField(max_length=200, verbose_name="Alt", blank=True, null=True)
+    hotel = models.ForeignKey(HotelPage, null=True, blank=True)
+
+
+class HotelRoomImage(models.Model):
+    image = models.CharField(max_length=200, verbose_name="Hotel Room Image URL", blank=True, null=True)
     alt = models.CharField(max_length=200, verbose_name="Alt", blank=True, null=True)
     hotel = models.ForeignKey(HotelPage, null=True, blank=True)
