@@ -5,5 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('gohotels.views',
     url("^$", "home", name="home"),
+    (r'^(?P<pageslug>[\w-]+),(?P<hotelid>.*)/$', 'detail'),
 )
   

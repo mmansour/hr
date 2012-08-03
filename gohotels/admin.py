@@ -14,7 +14,7 @@ class HotelAdmin(DisplayableAdmin):
 
 #    fieldsets = battles_fieldsets
     fieldsets = [
-        ("Title",                 {'fields': ['title']}),
+        ("Title",                 {'fields': ['title', 'hotelid']}),
         ("Published Date",        {'fields': ['publish_date']}),
         ("Published Status",      {'fields': ['status']}),
         ("Thunbnail",              {'fields': ['thumbnail_url']}),

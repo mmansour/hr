@@ -37,9 +37,9 @@ class HotelPage(Displayable):
     room_amenities = RichTextField(blank=True, verbose_name="Room Amenities")
     property_amenities = RichTextField(blank=True, verbose_name="Property Amenities")
 
-#    @models.permalink
-#    def get_absolute_url(self):
-#        return ('battles.views.detail', [self.slug, self.video_youtube_id])
+    @models.permalink
+    def get_absolute_url(self):
+        return ('gohotels.views.detail', [self.slug, self.hotelid])
 
     def __unicode__(self):
         return self.title

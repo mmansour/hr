@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+
+{% block title %}
+{% trans "Hotel Detail" %}
+{% endblock %}
+
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Home" %}</li>
+{% endblock %}
+
+{% block main %}
+<h1>{{ thehotel.title }}</h1>
+    
+<address>
+{{ thehotel.address1 }}<br />
+{{ thehotel.city }}<br />
+{{ thehotel.state_province_code }}<br />
+{{ thehotel.country_code }}
+</address>
+    
+<h2>Property Description</h2>
+{{ thehotel.property_description|safe }}
+
+<h2>Area Information</h2>
+{{ thehotel.area_information|safe }}
+
+
+{% if thehotel.hotel_rating %}
+<h4>Hotel Rating</h4>
+<em>{{ thehotel.hotel_rating }}</em>
+{% endif %}
+
+
+{% if thehotel.trip_advisor_rating %}
+<h4>Trip Advisor Rating</h4>
+<em>{{ thehotel.trip_advisor_rating }}</em>
+{% endif %}
+    
+{% for img in thehotel.hotelimage_set.all %}
+    <img src="{{ img.image_url }}" {% if img.caption %}alt="{{ img.caption }}"{% endif %} /><br /><br />
+{% endfor %}
+{% endblock %}
