@@ -14,69 +14,118 @@ import re
 class Command(BaseCommand):
     help = 'Pulls the wellness hotels in from the expedia api'
     def handle(self, *args, **options):
-        keywordlist = ["retreat", "organic", "wellness", "wellness spa", "organic food", "organic wine",
-                       "eco friendly", "meditation", "ocean", "beachfront", "mountains", "skiing", "surfing",
-                       "new age", "spiritual", "spirituality", "power vortex",
-                       "therapeutic", "zen", "crystals", "healing", "yoga", "eco-friendly", "eco",
-                       "health conscious", "rejuvenation", "creativity", "spiritual vortex", "vortex",
-                       "inner reflection", "boutique hotel", "boutique inn"]
         
+        keywordlist = ["retreat",
+                       "organic",
+                       "organic food",
+                       "organic wine",
+                       "wellness",
+                       "wellness spa",
+                       "eco friendly",
+                       "meditation",
+                       "new age",
+                       "spiritual",
+                       "spirituality",
+                       "power vortex",
+                       "therapeutic",
+                       "zen",
+                       "crystals",
+                       "healing",
+                       "yoga",
+                       "eco-friendly",
+                       "health conscious",
+                       "rejuvenation",
+                       "creativity",
+                       "spiritual vortex",
+                       "vortex",
+                       "inner reflection",
+                       "chakras",
+                       "self improvement",
+#                       "eco",
+#                       "ocean",
+#                       "beachfront",
+#                       "mountains",
+#                       "skiing",
+#                       "surfing",
+#                       "boutique hotel",
+#                       "boutique inn"
+        ]
+
+        filteredcondodescdict = {}
+
 ####### REG EXT TO MATCH EXACT PHRASE AND NOT SUBSTRING OF WORD
         exactMatch = re.compile(r'\b%s\b' % '\\b|\\b'.join(keywordlist), flags=re.IGNORECASE)
 #       EXAMPLE print len(exactMatch.findall("health conscious, eco-friendly then there was the time when <p>SURFING</p>"))
 
         
 #        order of operations for import data
-#        1. import all hotels active (filtered based on keywordlist)
-#        2. import all condos active
-#        3. run dedupe
-#        4. import all condo descriptions
-#        5. filter out and delete all non zen hotels (Q)
-#        6. images
+#        1. import filtered hotels active
+#        2. import filtered condo descriptions
+#        3. import remaining condo data filtered condos
+#        4. images
 
-#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
-##        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_all_active_utf.csv', 'rU') as f:
-##        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_desc_utf.csv', 'rU') as f:
-#
-#            reader = csv.reader(f, delimiter=',')
-#            reader.next() # SKIPS HEADER LINE
-#            for col in reader:
-#                col[0] Hotel Id
-#                col[1] Hotel Name
-#                col[3] Address 1
-#                col[6] City
-#                col[7] State/Province
-#                col[8] Country
-#                col[9] Postal Code
-#                col[10] Longitude
-#                col[11] Latitude
-#                col[12] Low Rate
-#                col[13] High Rate
-#                col[17] Property Type
-#                col[22] Native Currency
-#                col[23] Number of Rooms
-#                col[26] Check in time
-#                col[27] Check out time
-#                col[72] Property Description Etc...
+        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
+#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_all_active_utf8.txt', 'rU') as f:
+#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_desc_utf.csv', 'rU') as f:
+            reader = csv.reader(f, delimiter=',')
+            reader.next() # SKIPS HEADER LINE
+            for col in reader:
+#                print col
+#                col[0] Hotel Id, col[1] Hotel Name | Or property description in condo_desc.csv
+#                col[3] Address 1, col[6] City, col[7] State/Province, col[8] Country, col[9] Postal Code
+#                col[10] Longitude, col[11] Latitude, col[12] Low Rate, col[13] High Rate, col[17] Property Type
+#                col[22] Native Currency, col[23] Number of Rooms, col[26] Check in time
+#                col[27] Check out time, col[72] Property Description Etc...
 
-############## FILTER AND DELETE ALL NON ZEN STUFF
+################################################ FILTER AND DELETE ALL NON ZEN STUFF
+############# 1. COLLECT IDS OF ZEN CONDOS BY DESC - from condo_desc - DEPUDE WITH DICT  (condo_desc_utf.csv)
+#                for word in keywordlist:
+#                    if len(exactMatch.findall(col[1])) > 0:
+#                        filteredcondodescdict[col[0]] = col[1]
 
-        hotels = HotelPage.objects.all()
-        print len(hotels)
-
-#        1. GET ID of ZEN CONDOS BY DESC from condo_desc and ADD TO A LIST
-#        2. ADD THOSE CONDOS FROM THE LIST to the DB through condo_active_all
-#        3. GO BACK TO condo_decs.csv and ADD the DESC for each zen CONDO
-
-
-############## IMPORT CONDO DESCRIPTIONS
+############# 2. POPULATE INITIAL DATA: ADD CONDO ID AND DESC FROM DICT TO THE DB (condo_desc_utf.csv)
+#            for key, value in filteredcondodescdict.iteritems():
 #                try:
-#                    hotel = HotelPage.objects.get(hotelid=col[0])
-#                    hotel.property_description = col[1]
-#                    hotel.save()
-#                    print 'Add Desc to {0}'.format(col[0])
-#                except HotelPage.DoesNotExist:
+#                    c, created = HotelPage.objects.get_or_create(
+#                        title="{0}".format('Condo {0}'.format(key)),
+#                        publish_date=datetime.datetime.now(),
+#                        status=1,
+#                        hotelid=key,
+#                        property_description=value,
+#                    )
+#                    print c, created
+#                except UnicodeEncodeError:
 #                    pass
+
+############# 3 IMPORT REMAINING ZEN CONDO DATA (condo_all_active_utf.csv)
+#                try:
+#                    try:
+#                        hotel = HotelPage.objects.get(hotelid=col[0])
+#                        hotel.title="{0}".format(col[1].decode('utf-8'))
+#                        hotel.slug = slugify("{0} {1} {2} {3}".format(col[1], col[6], col[7], col[8]))
+#                        hotel.publish_date=datetime.datetime.now()
+#                        hotel.status=2
+#                        hotel.address1=col[3]
+#                        hotel.city=col[6]
+#                        hotel.state_province_code=col[7]
+#                        hotel.postal_code=col[9]
+#                        hotel.country_code=col[8]
+#                        hotel.rate_currency_code=col[22]
+#                        hotel.property_category=col[17]
+#                        hotel.latitude=col[11]
+#                        hotel.longitude=col[10]
+#                        hotel.low_rate=col[12]
+#                        hotel.high_rate=col[13]
+#                        hotel.number_of_rooms=col[23]
+#                        hotel.check_in_time=col[26]
+#                        hotel.check_out_time=col[27]
+#                        hotel.save()
+#                        print "Saved hotel {0}".format(hotel)
+#                    except HotelPage.DoesNotExist:
+#                        pass
+#                except UnicodeEncodeError:
+#                    pass
+
 
 
 ############## IMPORT CONDO DATA UNFILTERED
@@ -108,40 +157,40 @@ class Command(BaseCommand):
 #                    pass
 
 ############ IMPORT HOTEL DATA
-#                filteredkeywordlist = []
-#                for word in keywordlist:
-#                    if len(exactMatch.findall(col[72])) > 0:
-#                        filteredkeywordlist.append(col[0])
-#
-#                dedupedfilteredkeywordlist = list(set(filteredkeywordlist))
-#
-#                for h in dedupedfilteredkeywordlist:
-#                    try:
-#                        h, created = HotelPage.objects.get_or_create(
-#                            title="{0}".format(col[1].decode('utf-8')),
-#                            slug = slugify("{0} {1} {2} {3}".format(col[1], col[6], col[7], col[8])),
-#                            publish_date=datetime.datetime.now(),
-#                            status=2,
-#                            hotelid=col[0],
-#                            address1=col[3],
-#                            city=col[6],
-#                            state_province_code=col[7],
-#                            postal_code=col[9],
-#                            country_code=col[8],
-#                            rate_currency_code=col[22],
-#                            property_category=col[17],
-#                            latitude=col[11],
-#                            longitude=col[10],
-#                            low_rate=col[12],
-#                            high_rate=col[13],
-#                            number_of_rooms=col[23],
-#                            check_in_time=col[26],
-#                            check_out_time=col[27],
-#                            property_description=col[72],
-#                        )
-#                        print h, created
-#                    except UnicodeEncodeError:
-#                        pass
+                filteredkeywordlist = []
+                for word in keywordlist:
+                    if len(exactMatch.findall(col[72])) > 0:
+                        filteredkeywordlist.append(col[0])
+
+                dedupedfilteredkeywordlist = list(set(filteredkeywordlist))
+
+                for h in dedupedfilteredkeywordlist:
+                    try:
+                        h, created = HotelPage.objects.get_or_create(
+                            title="{0}".format(col[1].decode('utf-8')),
+                            slug = slugify("{0} {1} {2} {3}".format(col[1], col[6], col[7], col[8])),
+                            publish_date=datetime.datetime.now(),
+                            status=2,
+                            hotelid=col[0],
+                            address1=col[3],
+                            city=col[6],
+                            state_province_code=col[7],
+                            postal_code=col[9],
+                            country_code=col[8],
+                            rate_currency_code=col[22],
+                            property_category=col[17],
+                            latitude=col[11],
+                            longitude=col[10],
+                            low_rate=col[12],
+                            high_rate=col[13],
+                            number_of_rooms=col[23],
+                            check_in_time=col[26],
+                            check_out_time=col[27],
+                            property_description=col[72],
+                        )
+                        print h, created
+                    except UnicodeEncodeError:
+                        pass
 
 
 ############## REMOVE DUPE HOTELS
@@ -152,7 +201,7 @@ class Command(BaseCommand):
 #                row.delete()
 #                print 'Deleted row {0}'.format(row.hotelid)
 
-############ REMOVE ALL HOTELS
+########## REMOVE ALL HOTELS
 #        for row in HotelPage.objects.all():
 #            print 'Deleted row {0}'.format(row.hotelid)
 #            row.delete()
