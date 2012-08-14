@@ -32,7 +32,7 @@ class HotelAdmin(DisplayableAdmin):
     list_display = ('title', 'status', 'publish_date',)
     list_editable = ('status',)
     list_filter = ['status','publish_date']
-    search_fields = ['title']
+    search_fields = ['title', 'hotelid']
     date_hierarchy = 'publish_date'
 
 admin.site.register(HotelPage, HotelAdmin)
