@@ -7,7 +7,6 @@ import json
 import time
 import datetime
 import csv
-
 import re
 
 class Command(BaseCommand):
@@ -51,18 +50,17 @@ class Command(BaseCommand):
 #                       "boutique hotel",
 #                       "boutique inn"
         ]
-####### REG EXT TO MATCH EXACT PHRASE AND NOT SUBSTRING OF WORD
         exactMatch = re.compile(r'\b%s\b' % '\\b|\\b'.join(keywordlist), flags=re.IGNORECASE)
 #       EXAMPLE print len(exactMatch.findall("health conscious, eco-friendly then there was the time when <p>SURFING</p>"))
 
-#        order of operations for import data
-#        1. import filtered hotels active
-#        2. import filtered condo descriptions
-#        3. import remaining condo data filtered condos
-#        4. import images
+#       Order of operations for import data
+#       1. import filtered hotels active
+#       2. import filtered condo descriptions
+#       3. import remaining condo data filtered condos
+#       4. import images
 
         with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
-            reader = csv.reader(f, delimiter='|')
+            reader = csv.reader(f, delimiter=',')
             reader.next() # SKIPS HEADER LINE
             for col in reader:
 
@@ -107,21 +105,7 @@ class Command(BaseCommand):
                     except UnicodeEncodeError:
                         pass
 
-############## REMOVE DUPE HOTELS
-#        for row in HotelPage.objects.all():
-#            print 'Checking row {0}'.format(row.hotelid)
-#
-#            if HotelPage.objects.filter(hotelid=row.hotelid).count() > 1:
-#                row.delete()
-#                print 'Deleted row {0}'.format(row.hotelid)
-
-########## REMOVE ALL HOTELS
-#        for row in HotelPage.objects.all():
-#            print 'Deleted row {0}'.format(row.hotelid)
-#            row.delete()
-
-
-###############################################################  API
+###############################################################  API EXAMPLES ############################################################### 
 
 #        hotellist = requests.get('''http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505\
 #        &apiKey=5vmbsthq9569w8f25xzzggmf&customerUserAgent=xxx&customerIpAddress=xxx&locale=en_US\
