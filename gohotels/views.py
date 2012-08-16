@@ -10,7 +10,7 @@ from exceptions import ValueError
 
 
 def home(request):
-    featured_hotel_list = HotelPage.objects.filter(status=2)[:7]
+    featured_hotel_list = HotelPage.objects.filter(status=2).filter(is_featured=True)[:7]
     blog_post_list = BlogPost.objects.filter(status=2)[:7]
     return render_to_response('index.html',
                             {'blog_post_list':blog_post_list,
