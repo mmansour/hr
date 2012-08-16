@@ -42,6 +42,6 @@
 {% endif %}
     
 {% for img in thehotel.hotelimage_set.all %}
-    <img src="{{ img.image_url }}" {% if img.caption %}alt="{{ img.caption }}"{% endif %} /><br /><br />
+    <img src="{{ img.image_url }}" {% if img.alt %}alt="{{ img.alt }}"{% endif %} /><br /><br />
 {% endfor %}
 {% endblock %}
