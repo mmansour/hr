@@ -1,11 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
 from gohotels.models import HotelPage, HotelImage
-from django.utils.encoding import force_unicode
-from mezzanine.core.models import slugify
-import requests
-import json
-import time
-import datetime
 import csv
 
 
@@ -16,27 +10,23 @@ class Command(BaseCommand):
         with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/HotelImageList.txt', 'rU') as f:
             reader = csv.reader(f, delimiter='|')
             reader.next() # SKIPS HEADER LINE
-            for col in reader:
-#                col[0] hotel id, col[1] caption, col[2] url, col[3] width,
-#                col[4] height, col[6] Thumbnail url, col[6] default image
-                try:
-                    print 'Checking id {0}'.format(col[0])
-                    print 'List length {0}'.format(len(filteredimageslist))
-                    h = HotelPage.objects.get(hotelid=col[0])
-                    print 'FOUND________________ id {0}'.format(col[0])
-                    filteredimageslist.append([[h],[col[1], col[2], col[6]]])
 
-                except HotelPage.DoesNotExist:
-                    pass
+            hotel = HotelPage.objects.all()
+            hotel_id_list = [i.hotelid for i in hotel]
+            csv_id_list = [[int(col[0]), col[1], col[2], col[6]]  for col in reader]
+            l3 = [h for h in csv_id_list if h[0] in hotel_id_list]
 
-            for item in filteredimageslist:
+            for i in l3:
+                each_hotel = HotelPage.objects.get(hotelid=i[0])
                 img = HotelImage(
-                    hotel=item[0][0],
-                    alt=item[1][0],
-                    image_url=item[1][1].replace('media.expedia.com', 'media.hotelretreats.com').replace('images.travelnow.com', 'media.hotelretreats.com'),
-                    thumbnail_url=item[1][2].replace('media.expedia.com', 'media.hotelretreats.com').replace('images.travelnow.com', 'media.hotelretreats.com'),
+                    hotel=each_hotel,
+                    alt=i[1],
+                    image_url=i[2].replace('media.expedia.com', 'media.hotelretreats.com').replace('images.travelnow.com', 'media.hotelretreats.com'),
+                    thumbnail_url=i[3].replace('media.expedia.com', 'media.hotelretreats.com').replace('images.travelnow.com', 'media.hotelretreats.com'),
                 )
                 img.save()
+
+
 
 
 
