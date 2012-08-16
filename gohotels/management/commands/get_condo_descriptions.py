@@ -53,7 +53,9 @@ class Command(BaseCommand):
 
         filteredcondodescdict = {}
         exactMatch = re.compile(r'\b%s\b' % '\\b|\\b'.join(keywordlist), flags=re.IGNORECASE)
-        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_desc_utf.csv', 'rU') as f:
+#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/condo_desc_utf.csv', 'rU') as f:
+        with open('/home/mattym/webapps/hotelretreats/docs/condo_desc_utf.csv', 'rU') as f:
+
             reader = csv.reader(f, delimiter=',')
             reader.next() # SKIPS HEADER LINE
             for col in reader:
