@@ -13,12 +13,25 @@
 {% endblock %}
 
 {% block main %}
-{% trans "Welcome to Hotel Retreats: Your guide to wellness hotels and retreats, fitness hotels, and healthy lifetyle organic getaways." %}
+{% trans "Welcome to Hotel Retreats. We seek out hotels that specialize in creating a serene environment to relax, reflect and create. We love wellness hotels, healthy hotels, and healthy lifestyle getaways that serve organic food. We want you to leave the hotel feeling like you are ready to take on the world. " %}
 
 <div class="blog-list-detail">
+<h3>Featured Wellness Hotels</h3>
+{% for welless_hotel in featured_hotel_list %}
+    <h4><a href="{{ welless_hotel.get_absolute_url }}">{{ welless_hotel.title|title }}</a></h4>
+    <address><em>
+    {{ welless_hotel.address1 }}<br />
+    {{ welless_hotel.city }}, {{ welless_hotel.state_province_code }} {% if  welless_hotel.postal_code %}{{ welless_hotel.postal_code }}{% endif %}
+    <br />{{ welless_hotel.country_code }}
+    </em></address>
+{% endfor %}
+</div>
+
+{% comment %}<div class="blog-list-detail">
 <h3>Recent Blog Posts</h3>
 {% for blog_post in blog_post_list %}
     <h4><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h4>
 {% endfor %}
-</div>
+</div>{% endcomment %}
+
 {% endblock %}

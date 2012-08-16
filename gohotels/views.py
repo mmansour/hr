@@ -10,9 +10,11 @@ from exceptions import ValueError
 
 
 def home(request):
+    featured_hotel_list = HotelPage.objects.filter(status=2)[:7]
     blog_post_list = BlogPost.objects.filter(status=2)[:7]
     return render_to_response('index.html',
-                            {'blog_post_list':blog_post_list},
+                            {'blog_post_list':blog_post_list,
+                             'featured_hotel_list':featured_hotel_list},
                              context_instance=RequestContext(request))
 
 
