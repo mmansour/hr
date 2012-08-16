@@ -8,6 +8,7 @@ class HotelPage(Displayable):
     hotelid = models.IntegerField(max_length=400, verbose_name="Hotel ID", blank=True, null=True)
     video_youtube_id = models.CharField(max_length=40, verbose_name="Youtube Video ID", blank=True, null=True)
     thumbnail_url = models.CharField(max_length=40, verbose_name="Thumbnail Url", blank=True, null=True)
+    is_featured = models.BooleanField(default=False, verbose_name="Is This Hotel Featured?")
     address1 = models.CharField(max_length=400, verbose_name="Address 1", blank=True, null=True)
 #    address2 = models.CharField(max_length=400, verbose_name="Address 2", blank=True, null=True)
     city = models.CharField(max_length=100, verbose_name="City", blank=True, null=True)

@@ -17,6 +17,7 @@ class HotelAdmin(DisplayableAdmin):
         ("Title",                 {'fields': ['title', 'hotelid']}),
         ("Published Date",        {'fields': ['publish_date']}),
         ("Published Status",      {'fields': ['status']}),
+        ("Featured Hotel?",      {'fields': ['is_featured']}),
         ("Thunbnail",              {'fields': ['thumbnail_url']}),
         ("Video ID",              {'fields': ['video_youtube_id']}),
         ("Address",               {'fields': ['address1','city','state_province_code','postal_code','country_code']}),
@@ -29,9 +30,9 @@ class HotelAdmin(DisplayableAdmin):
     ]
 
     inlines = [ChoiceInlineHotelImage, ChoiceInlineRoomImage,]
-    list_display = ('title', 'status', 'publish_date',)
-    list_editable = ('status',)
-    list_filter = ['status','publish_date']
+    list_display = ('title', 'status', 'publish_date', 'is_featured',)
+    list_editable = ('status','is_featured',)
+    list_filter = ['status','publish_date','is_featured']
     search_fields = ['title', 'hotelid']
     date_hierarchy = 'publish_date'
 
