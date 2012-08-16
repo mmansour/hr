@@ -17,16 +17,17 @@
     
 <address>
 {{ thehotel.address1 }}<br />
-{{ thehotel.city }}<br />
-{{ thehotel.state_province_code }}<br />
-{{ thehotel.country_code }}
+{{ thehotel.city }}, {{ thehotel.state_province_code }} {% if  thehotel.postal_code %}{{ thehotel.postal_code }}{% endif %}
+<br />{{ thehotel.country_code }}
 </address>
     
 <h2>Property Description</h2>
 {{ thehotel.property_description|safe }}
 
+{% if thehotel.area_information %}
 <h2>Area Information</h2>
 {{ thehotel.area_information|safe }}
+{% endif %}
 
 
 {% if thehotel.hotel_rating %}
