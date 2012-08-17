@@ -13,7 +13,10 @@
 {% endblock %}
 
 {% block main %}
-<img src="{{ thehotel.thumbnail_url }}" alt="{{ thehotel.title|title }}" class="thumbnail" style="float:right; margin-left:7px;"/>
+<span style="float:right; margin-left:7px;">
+<img src="{{ thehotel.thumbnail_url }}" alt="{{ thehotel.title|title }}" class="thumbnail"/>
+<a href="#photos">Photos below</a>
+</span>
 <h1>{{ thehotel.title }}</h1>
 <address>
 {{ thehotel.address1 }}<br />
@@ -40,7 +43,8 @@
 <h4>Trip Advisor Rating</h4>
 <em>{{ thehotel.trip_advisor_rating }}</em>
 {% endif %}
-    
+<a name="photos"></a>
+<h4>Property Photos</h4>
 {% for img in thehotel.hotelimage_set.all %}
     <img src="{{ img.image_url }}" {% if img.alt %}alt="{{ img.alt }}"{% endif %} /><br /><br />
 {% endfor %}
