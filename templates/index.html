@@ -18,6 +18,7 @@
 <div class="blog-list-detail">
 <h3>Featured Wellness Hotels</h3>
 {% for welless_hotel in featured_hotel_list %}
+    <img src="{{ welless_hotel.thumbnail_url }}" align="left" alt="{{ welless_hotel.title|title }}" class="thumbnail" hspace="5"/>
     <h4><a href="{{ welless_hotel.get_absolute_url }}">{{ welless_hotel.title|title }}</a></h4>
     <address><em>
     {{ welless_hotel.address1 }}<br />

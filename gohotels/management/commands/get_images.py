@@ -7,8 +7,8 @@ class Command(BaseCommand):
     help = 'Pulls hotel images'
     def handle(self, *args, **options):
         filteredimageslist = []
-        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/HotelImageList.txt', 'rU') as f:
-#        with open('/home/mattym/webapps/hotelretreats/docs/HotelImageList.txt', 'rU') as f:
+#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/HotelImageList.txt', 'rU') as f:
+        with open('/home/mattym/webapps/hotelretreats/docs/HotelImageList.txt', 'rU') as f:
 
             reader = csv.reader(f, delimiter='|')
             reader.next() # SKIPS HEADER LINE
