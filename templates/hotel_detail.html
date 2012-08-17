@@ -43,7 +43,7 @@
 <h4>Trip Advisor Rating</h4>
 <em>{{ thehotel.trip_advisor_rating }}</em>
 {% endif %}
-<a name="photos"></a>
+<a id="photos"></a>
 <h4>Property Photos</h4>
 {% for img in thehotel.hotelimage_set.all %}
     <img src="{{ img.image_url }}" {% if img.alt %}alt="{{ img.alt }}"{% endif %} /><br /><br />
