@@ -12,13 +12,19 @@
 <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 
+{% block extra_css %}
+<style type="text/css">
+.blog-list-detail img{float:left;}
+</style>
+{% endblock %}
+
 {% block main %}
 {% trans "Welcome to Hotel Retreats. We seek out hotels that specialize in creating a serene environment to relax, reflect and create. We love wellness hotels, green hotels; any type of boutique hotel that offers  healthy lifestyle options, even if only organic food." %}
 
 <div class="blog-list-detail">
 <h3>Featured Wellness Hotels</h3>
 {% for welless_hotel in featured_hotel_list %}
-    <img src="{{ welless_hotel.thumbnail_url }}" align="left" alt="{{ welless_hotel.title|title }}" class="thumbnail" hspace="5"/>
+    <img src="{{ welless_hotel.thumbnail_url }}" alt="{{ welless_hotel.title|title }}" class="thumbnail" hspace="5"/>
     <h4><a href="{{ welless_hotel.get_absolute_url }}">{{ welless_hotel.title|title }}</a></h4>
     <address><em>
     {{ welless_hotel.address1 }}<br />
