@@ -14,7 +14,7 @@
 
 {% block extra_css %}
 <style type="text/css">
-.blog-list-detail img{float:left;}
+.blog-list-detail img{float:left; margin-right:7px;}
 </style>
 {% endblock %}
 
@@ -24,7 +24,7 @@
 <div class="blog-list-detail">
 <h3>Featured Wellness Hotels</h3>
 {% for welless_hotel in featured_hotel_list %}
-    <img src="{{ welless_hotel.thumbnail_url }}" alt="{{ welless_hotel.title|title }}" class="thumbnail" hspace="5"/>
+    <img src="{{ welless_hotel.thumbnail_url }}" alt="{{ welless_hotel.title|title }}" class="thumbnail"/>
     <h4><a href="{{ welless_hotel.get_absolute_url }}">{{ welless_hotel.title|title }}</a></h4>
     <address><em>
     {{ welless_hotel.address1 }}<br />
