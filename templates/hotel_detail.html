@@ -2,7 +2,11 @@
 
 {% load i18n %}
 
-{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block meta_title %}{{ thehotel.title }} {{ thehotel.city }}, {{ thehotel.state_province_code }}{% endblock %}
+
+{% block meta_description %}
+{{ thehotel.title }} is located in {{ thehotel.city }} {{ thehotel.state_province_code }}. {% if thehotel.low_rate or thehotel.high_rate %}Rates are between {{ thehotel.low_rate }} and {{ thehotel.high_rate }} {{ thehotel.rate_currency_code }}{% endif %}.
+{% endblock %}
 
 {% block title %}
 {% trans "Hotel Detail" %}
