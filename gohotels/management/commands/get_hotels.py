@@ -59,8 +59,8 @@ class Command(BaseCommand):
 #       3. import remaining condo data filtered condos
 #       4. import images
 
-#        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
-        with open('/home/mattym/webapps/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
+        with open('/users/mattmansour/django/sites/dev/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
+#        with open('/home/mattym/webapps/hotelretreats/docs/hotel_all_active_utf.csv', 'rU') as f:
             reader = csv.reader(f, delimiter=',')
             reader.next() # SKIPS HEADER LINE
             for col in reader:

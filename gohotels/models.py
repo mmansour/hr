@@ -3,7 +3,9 @@ from django.db import models
 from django.utils import simplejson
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 
+#Required for south to work with geo django
 from south.modelsinspector import add_introspection_rules
 rules = [
   (
@@ -57,11 +59,15 @@ class HotelPage(Displayable):
     property_amenities = RichTextField(blank=True, verbose_name="Property Amenities")
     point = models.PointField(null=True, blank=True)
     geomanager = models.GeoManager()
-    search_fields = {"city": 10, "state_province_code": 10, "property_description":5 }
+    search_fields = {"title":5, "city": 10, "state_province_code": 5, "property_description":5 }
 
     @models.permalink
     def get_absolute_url(self):
         return ('gohotels.views.detail', [self.slug, self.hotelid])
+
+    def save(self, *args, **kwargs):
+        self.point = Point(float(self.longitude), float(self.latitude))
+        super(HotelPage, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.title

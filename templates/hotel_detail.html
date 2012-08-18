@@ -17,10 +17,12 @@
 {% endblock %}
 
 {% block main %}
+{% if thehotel.thumbnail_url %}
 <span style="float:right; margin-left:7px;">
 <img src="{{ thehotel.thumbnail_url }}" alt="{{ thehotel.title|title }}" class="thumbnail"/>
 <a href="#photos">Photos below</a>
 </span>
+{% endif %}
 <h1>{{ thehotel.title }}</h1>
 <address>
 {{ thehotel.address1 }}<br />
