@@ -2,6 +2,22 @@ from mezzanine.core.models import Displayable, RichTextField
 from django.db import models
 from django.utils import simplejson
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.contrib.gis.db import models
+
+from south.modelsinspector import add_introspection_rules
+rules = [
+  (
+    (),
+    [],
+    {
+#        "to": ["rel.to", {}],
+#        "to_field": ["rel.field_name", {"default_attr": "rel.to._meta.pk.name"}],
+#        "related_name": ["rel.related_name", {"default": None}],
+#        "db_index": ["db_index", {"default": True}],
+    },
+  )
+]
+add_introspection_rules(rules, ["^django\.contrib\.gis"])
 
 
 class HotelPage(Displayable):
@@ -39,6 +55,9 @@ class HotelPage(Displayable):
     room_types = RichTextField(blank=True, verbose_name="Room Types")
     room_amenities = RichTextField(blank=True, verbose_name="Room Amenities")
     property_amenities = RichTextField(blank=True, verbose_name="Property Amenities")
+    point = models.PointField(null=True, blank=True)
+    geomanager = models.GeoManager()
+    search_fields = {"city": 10, "state_province_code": 10, "property_description":5 }
 
     @models.permalink
     def get_absolute_url(self):
