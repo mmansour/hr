@@ -69,7 +69,7 @@
     {% for h in nearby_hotels %}
     {% if h.hotelid != thehotel.hotelid %}
     <li>
-        {% if h.thumbnail_url %}<img src="{{ h.thumbnail_url }}" alt="">{% endif %}
+        {% if h.thumbnail_url %}<img src="{{ h.thumbnail_url }}" alt="{{ h.title|title }}">{% endif %}
         <h4><a href="{{ h.get_absolute_url }}">{{ h.title|title }}</a></h4>
         <em>({{h.distance.mi|floatformat}} miles away)</em>
         <address><em>
