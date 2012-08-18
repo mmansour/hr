@@ -55,7 +55,7 @@
 <a id="photos"></a>
 <h4>Property Photos</h4>
 {% for img in thehotel.hotelimage_set.all %}
-    <img src="{{ img.image_url }}" {% if img.alt %}alt="{{ img.alt }}"{% endif %} /><br /><br />
+    <img src="{{ img.image_url }}" alt="{% if img.alt %}{{ img.alt }}{% else %}{{ thehotel.title|title }}{% endif %}" /><br /><br />
 {% endfor %}
 {% endif %}
 
