@@ -41,25 +41,25 @@
 
 
 {% if thehotel.hotel_rating %}
-<h4>Hotel Rating</h4>
+<h3>Hotel Rating</h3>
 <em>{{ thehotel.hotel_rating }}</em>
 {% endif %}
 
 
 {% if thehotel.trip_advisor_rating %}
-<h4>Trip Advisor Rating</h4>
+<h3>Trip Advisor Rating</h3>
 <em>{{ thehotel.trip_advisor_rating }}</em>
 {% endif %}
 
 {% if thehotel.thumbnail_url %}
 <a id="photos"></a>
-<h4>Property Photos</h4>
+<h3>Property Photos</h3>
 {% for img in thehotel.hotelimage_set.all %}
     <img src="{{ img.image_url }}" alt="{% if img.alt %}{{ img.alt }}{% else %}{{ thehotel.title|title }}{% endif %}" /><br /><br />
 {% endfor %}
 {% endif %}
 
-{% rating_for thehotel %}
+<h3>{% trans "Rate Hotel" %}</h3>{% rating_for thehotel %}
 {% if thehotel.allow_comments %}{% comments_for thehotel %}{% endif %}
 
 {% endblock %}
