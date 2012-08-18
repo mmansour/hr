@@ -98,16 +98,17 @@ $(function() {
 </div>
 
 <div class="span3 right">
-    {% nevercache %}
-    {% include "includes/user_panel.html" %}
-    {% endnevercache %}
-    <div class="panel">
-    {% block right_panel %}
-    {% ifinstalled mezzanine.twitter %}
-    {% include "twitter/tweets.html" %}
-    {% endifinstalled %}
-    {% endblock %}
-    </div>
+{% nevercache %}
+{% include "includes/user_panel.html" %}
+{% endnevercache %}
+{% block extra_third_col %}{% endblock %}
+<div class="panel">
+{% block right_panel %}
+{% ifinstalled mezzanine.twitter %}
+{% include "twitter/tweets.html" %}
+{% endifinstalled %}
+{% endblock %}
+</div>
 </div>
 
 </div>

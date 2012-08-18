@@ -24,11 +24,9 @@ def detail(request, hotelid, pageslug):
     try:
         thehotel = get_object_or_404(HotelPage, hotelid=hotelid)
         pnt = GEOSGeometry('POINT({0} {1})'.format(float(thehotel.longitude),float(thehotel.latitude)), srid=4326)
-        nearby_hotels = HotelPage.geomanager.filter(point__distance_lte=(pnt, D(mi=25))).distance(pnt).order_by('distance')
-
-        for h in nearby_hotels:
-            print h, '{0:.2f}'.format(h.distance.mi)
-            
+        nearby_hotels = HotelPage.geomanager.filter(point__distance_lte=(pnt, D(mi=60))).distance(pnt).order_by('distance')[:7]
+#        for h in nearby_hotels:
+#            print h, '{0:.2f}'.format(h.distance.mi)
         if pageslug != thehotel.slug:
             return HttpResponsePermanentRedirect(thehotel.get_absolute_url())
         else:

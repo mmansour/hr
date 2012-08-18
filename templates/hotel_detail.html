@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block main %}
+
 {% if thehotel.thumbnail_url %}
 <span style="float:right; margin-left:7px;">
 <img src="{{ thehotel.thumbnail_url }}" alt="{{ thehotel.title|title }}" class="thumbnail"/>
@@ -49,9 +50,36 @@
 <h4>Trip Advisor Rating</h4>
 <em>{{ thehotel.trip_advisor_rating }}</em>
 {% endif %}
+
+{% if thehotel.thumbnail_url %}
 <a id="photos"></a>
 <h4>Property Photos</h4>
 {% for img in thehotel.hotelimage_set.all %}
     <img src="{{ img.image_url }}" {% if img.alt %}alt="{{ img.alt }}"{% endif %} /><br /><br />
 {% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block extra_third_col %}
+{% if nearby_hotels %}
+<div class="panel">
+<h3>{% trans "Nearby Hotels" %}</h3>
+<ul class="unstyled tweets">
+    {% for h in nearby_hotels %}
+    {% if h.hotelid != thehotel.hotelid %}
+    <li>
+        {% if h.thumbnail_url %}<img src="{{ h.thumbnail_url }}" alt="">{% endif %}
+        <h4><a href="{{ h.get_absolute_url }}">{{ h.title|title }}</a></h4>
+        <em>({{h.distance.mi|floatformat}} miles away)</em>
+        <address><em>
+        {{ h.address1 }}<br />
+        {{ h.city }} {% if  h.postal_code %}{{ h.postal_code }}{% endif %}
+        </em></address>
+        </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
 {% endblock %}

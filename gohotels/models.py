@@ -60,6 +60,7 @@ class HotelPage(Displayable):
     point = models.PointField(null=True, blank=True)
     geomanager = models.GeoManager()
     search_fields = {"title":5, "city": 10, "state_province_code": 5, "property_description":5 }
+#    search_fields = {"city": 10}
 
     @models.permalink
     def get_absolute_url(self):
