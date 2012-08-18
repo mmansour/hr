@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n %}
 
 {% block meta_title %}{{ thehotel.title }} {{ thehotel.city }}, {{ thehotel.state_province_code }}{% endblock %}
 
@@ -58,6 +58,9 @@
     <img src="{{ img.image_url }}" alt="{% if img.alt %}{{ img.alt }}{% else %}{{ thehotel.title|title }}{% endif %}" /><br /><br />
 {% endfor %}
 {% endif %}
+
+{% rating_for thehotel %}
+{% if thehotel.allow_comments %}{% comments_for thehotel %}{% endif %}
 
 {% endblock %}
 

@@ -4,6 +4,7 @@ from django.utils import simplejson
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from mezzanine.generic.fields import CommentsField, RatingField
 
 #Required for south to work with geo django
 from south.modelsinspector import add_introspection_rules
@@ -57,6 +58,10 @@ class HotelPage(Displayable):
     room_types = RichTextField(blank=True, verbose_name="Room Types")
     room_amenities = RichTextField(blank=True, verbose_name="Room Amenities")
     property_amenities = RichTextField(blank=True, verbose_name="Property Amenities")
+    allow_comments = models.BooleanField(verbose_name=_("Allow comments"),
+                                         default=True)
+    comments = CommentsField(verbose_name=_("Comments"))
+    rating = RatingField(verbose_name=_("Rating"))
     point = models.PointField(null=True, blank=True)
     geomanager = models.GeoManager()
     search_fields = {"title":5, "city": 10, "state_province_code": 5, "property_description":5 }
