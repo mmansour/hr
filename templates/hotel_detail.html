@@ -29,7 +29,11 @@
 {{ thehotel.address1 }}<br />
 {{ thehotel.city }}, {{ thehotel.state_province_code }} {% if  thehotel.postal_code %}{{ thehotel.postal_code }}{% endif %}
 <br />{{ thehotel.country_code }}
+{% if  thehotel.website %}
+<br />Website: <a href="{{ thehotel.website }}" target="_blank">{{ thehotel.website }}</a>
+{% endif %}
 </address>
+
     
 <h2>Property Description</h2>
 {{ thehotel.property_description|safe }}
