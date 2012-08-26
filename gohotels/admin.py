@@ -20,7 +20,7 @@ class HotelAdmin(DisplayableAdmin):
         ("Featured Hotel?",      {'fields': ['is_featured']}),
         ("Thunbnail",              {'fields': ['thumbnail_url']}),
         ("Video ID",              {'fields': ['video_youtube_id']}),
-        ("Address",               {'fields': ['address1','city','state_province_code','postal_code','country_code']}),
+        ("Address",               {'fields': ['address1','city','state_province_code','postal_code','country_code','website']}),
         ("Geo Data",              {'fields': ['latitude','longitude']}),
         ("Description",           {'fields': ['location_description','area_information','property_description','hotel_policy',\
                                                   'room_information','checkin_instructions', 'driving_directions', 'room_types',\
